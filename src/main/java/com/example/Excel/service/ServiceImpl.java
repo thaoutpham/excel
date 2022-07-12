@@ -3,7 +3,6 @@ package com.example.Excel.service;
 import com.example.Excel.model.DataObject;
 import com.example.Excel.model.IndexError;
 import com.example.Excel.model.People;
-import com.example.Excel.model.PeopleReadExcel;
 import com.example.Excel.repository.DemoRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -38,7 +37,6 @@ public class ServiceImpl implements IService {
         }
         XSSFSheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
-            PeopleReadExcel demo = new PeopleReadExcel();
             XSSFRow row = worksheet.getRow(i);
 
             int number = 0;
@@ -121,11 +119,6 @@ public class ServiceImpl implements IService {
         dataObject.setIndexErrorList(indexErrorList);
         return dataObject;
 
-    }
-
-    @Override
-    public PeopleReadExcel create(PeopleReadExcel demo) {
-        return demoRepository.save(demo);
     }
 
     public Long convertStringToLong(String data) throws IOException {
