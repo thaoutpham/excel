@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,16 +49,8 @@ public class CSVHelper {
         }
     }
     public static LocalDate convertStringToDate(String date) {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            Date todayDate = df.parse(date);
-            LocalDate localDate = Instant.ofEpochMilli(todayDate.getTime())
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            return localDate;
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        return localDate;
     }
 }
