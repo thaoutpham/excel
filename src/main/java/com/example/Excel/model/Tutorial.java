@@ -1,11 +1,16 @@
 package com.example.Excel.model;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
+@Data
 @Table(name = "tutorials")
 public class Tutorial {
     @Id
@@ -13,44 +18,18 @@ public class Tutorial {
     private long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "date")
+    private LocalDate date;
     @Column(name = "published")
     private boolean published;
-    public Tutorial() {
-    }
-    public Tutorial(long id, String title, String description, boolean published) {
+
+    public Tutorial(long id, String title, LocalDate date, boolean published) {
         this.id = id;
         this.title = title;
-        this.description = description;
+        this.date = date;
         this.published = published;
     }
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public boolean isPublished() {
-        return published;
-    }
-    public void setPublished(boolean isPublished) {
-        this.published = isPublished;
-    }
-    @Override
-    public String toString() {
-        return "Tutorial [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
+
+    public Tutorial() {
     }
 }

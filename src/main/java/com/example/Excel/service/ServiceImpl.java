@@ -27,7 +27,7 @@ public class ServiceImpl implements IService {
     public DataObject readExcel(MultipartFile file) throws IOException {// đọc file excel
         DataObject dataObject = new DataObject();
         List<IndexError> indexErrorList = new ArrayList<>();
-        List<People> peopleList = new ArrayList<People>();
+        List<People> peopleList = new ArrayList<>();
         XSSFWorkbook workbook = null;
         try {
             workbook = new XSSFWorkbook(file.getInputStream());

@@ -9,12 +9,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CSVHelper {
     public static String TYPE = "text/csv";
-//    static String[] HEADERs = { "Id", "Title", "Description", "Published" };
     public static boolean hasCSVFormat(MultipartFile file) {
         if (!TYPE.equals(file.getContentType())) {// kiểm tra xem có phải file text hay csv không
             return false;
@@ -31,7 +37,7 @@ public class CSVHelper {
                 Tutorial tutorial = new Tutorial(
                         Long.parseLong(csvRecord.get("Id")),
                         csvRecord.get("Title"),
-                        csvRecord.get("Description"),
+                        convertStringToDate(csvRecord.get("Date")),
                         Boolean.parseBoolean(csvRecord.get("Published"))
                 );
                 tutorials.add(tutorial);
@@ -40,5 +46,18 @@ public class CSVHelper {
         } catch (IOException e) {
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         }
+    }
+    public static LocalDate convertStringToDate(String date) {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date todayDate = df.parse(date);
+            LocalDate localDate = Instant.ofEpochMilli(todayDate.getTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            return localDate;
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
